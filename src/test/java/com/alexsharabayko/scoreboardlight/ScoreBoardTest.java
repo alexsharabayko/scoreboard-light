@@ -40,4 +40,33 @@ class ScoreBoardTest {
       Assertions.assertEquals("Poland:Germany", id);
     }
   }
+
+  @Nested
+  class FinishGameChecks extends BaseChecks {
+    @Test()
+    @DisplayName("should remove a game from the scoreboard")
+    void shouldRemoveGame() {
+      scoreBoard.startGame(List.of("Poland", "Germany"));
+      scoreBoard.startGame(List.of("Mexico", "Brazil"));
+      final var initialSummary = scoreBoard.getSummary();
+
+      scoreBoard.finishGame("Mexico:Brazil");
+      final var finalSummary = scoreBoard.getSummary();
+
+      Assertions.assertEquals("Poland 0 - Germany 0; Mexico 0 - Brazil 0", initialSummary);
+      Assertions.assertEquals("Poland 0 - Germany 0", finalSummary);
+    }
+
+    @Test()
+    @DisplayName("should return correct boolean flag")
+    void shouldReturnCorrespondBoolValue() {
+      scoreBoard.startGame(List.of("Poland", "Germany"));
+
+      final var val1 = scoreBoard.finishGame("Mexico:Brazil");
+      final var val2 = scoreBoard.finishGame("Poland:Germany");
+
+      Assertions.assertNull(val1);
+      Assertions.assertEquals("Poland:Germany", val2.getId());
+    }
+  }
 }
