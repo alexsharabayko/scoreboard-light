@@ -33,10 +33,20 @@ public class Game {
     this.id = this.teams.stream().map(Team::getName).collect(Collectors.joining(":"));
   }
 
+  @Override
+  public String toString() {
+    return teams.stream().map(Team::toString).collect(Collectors.joining(" - "));
+  }
+
   @Getter
   @RequiredArgsConstructor
   static class Team {
     private final String name;
     private final Integer score;
+
+    @Override
+    public String toString() {
+      return String.format("%s %d", name, score);
+    }
   }
 }

@@ -43,10 +43,7 @@ public class ScoreBoard {
     return gamesMap
         .values()
         .stream()
-        .map(game -> game.getTeams()
-            .stream()
-            .map(team -> String.format("%s %d", team.getName(), team.getScore()))
-            .collect(Collectors.joining(" - ")))
+        .map(Game::toString)
         .collect(Collectors.joining("; "));
   }
 }
