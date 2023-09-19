@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 public class ScoreBoard {
   private final List<Game> games = new ArrayList<>();
 
-  public void startGame(List<String> teamNames) {
+  public String startGame(List<String> teamNames) {
     final var teams = teamNames.stream().map(name -> new Game.Team(name, 0)).toList();
     final var game = new Game(teams);
 
     games.add(game);
+
+    return game.getId();
   }
 
   public String getSummary() {
