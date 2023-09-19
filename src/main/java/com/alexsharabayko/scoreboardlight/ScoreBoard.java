@@ -8,13 +8,22 @@ import java.util.stream.Collectors;
 public class ScoreBoard {
   private final Map<String, Game> gamesMap = new LinkedHashMap<>();
 
-  public String startGame(List<String> teamNames) {
+  public Game startGame(List<String> teamNames) {
     final var game = new Game(teamNames);
+
+    if (gamesMap.containsKey(game.getId())) {
+      throw new IllegalStateException("There is such game in the score board");
+    }
+
     gamesMap.put(game.getId(), game);
-    return game.getId();
+    return game;
   }
 
   public Game finishGame(String id) {
+    if (!gamesMap.containsKey(id)) {
+      throw new IllegalStateException("There is no game with such id");
+    }
+
     return gamesMap.remove(id);
   }
 

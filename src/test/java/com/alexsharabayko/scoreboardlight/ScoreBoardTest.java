@@ -34,10 +34,18 @@ class ScoreBoardTest {
     }
 
     @Test()
-    @DisplayName("should return generated id of new game")
-    void shouldReturnId() {
-      final var id = scoreBoard.startGame(List.of("Poland", "Germany"));
-      Assertions.assertEquals("Poland:Germany", id);
+    @DisplayName("should return new game")
+    void shouldReturnNewGame() {
+      final var game = scoreBoard.startGame(List.of("Poland", "Germany"));
+      Assertions.assertEquals("Poland:Germany", game.getId());
+    }
+
+    @Test()
+    @DisplayName("should throw exception if there is such game")
+    void shouldThrowExceptionIfSuchGame() {
+      scoreBoard.startGame(List.of("Poland", "Germany"));
+
+      Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame(List.of("Poland", "Germany")));
     }
   }
 
@@ -58,15 +66,19 @@ class ScoreBoardTest {
     }
 
     @Test()
-    @DisplayName("could return finished game")
-    void couldReturnFinshedGame() {
+    @DisplayName("should return finished game")
+    void shouldReturnFinishedGame() {
       scoreBoard.startGame(List.of("Poland", "Germany"));
 
-      final var val1 = scoreBoard.finishGame("Mexico:Brazil");
-      final var val2 = scoreBoard.finishGame("Poland:Germany");
+      final var val = scoreBoard.finishGame("Poland:Germany");
 
-      Assertions.assertNull(val1);
-      Assertions.assertEquals("Poland:Germany", val2.getId());
+      Assertions.assertEquals("Poland:Germany", val.getId());
+    }
+
+    @Test()
+    @DisplayName("should throw exception if there is no game")
+    void shouldThrowExceptionIfNoGames() {
+      Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.finishGame("Poland:Germany"));
     }
   }
 
