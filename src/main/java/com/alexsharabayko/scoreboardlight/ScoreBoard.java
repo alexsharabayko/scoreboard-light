@@ -40,10 +40,6 @@ public class ScoreBoard {
   }
 
   public String getSummary() {
-    return gamesMap
-        .values()
-        .stream()
-        .map(Game::toString)
-        .collect(Collectors.joining("; "));
+    return gamesMap.values().stream().map(Game::toString).collect(Collectors.joining("; "));
   }
 }
