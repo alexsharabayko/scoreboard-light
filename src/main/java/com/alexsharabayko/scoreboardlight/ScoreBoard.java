@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class ScoreBoard {
   private final Map<String, Game> gamesMap = new LinkedHashMap<>();
 
-  public Game startGame(List<String> teamNames) {
-    final var game = new Game(teamNames);
+  public Game startGame(List<String> participantNames) {
+    final var game = new Game(participantNames);
 
     if (gamesMap.containsKey(game.getId())) {
       throw new IllegalStateException("There is such game in the score board");
@@ -33,8 +33,8 @@ public class ScoreBoard {
     }
 
     final var game = gamesMap.get(id);
-    final var teamNames = game.getTeams().stream().map(Game.Team::getName).toList();
-    final var newGame = new Game(teamNames, scores);
+    final var participantNames = game.getParticipants().stream().map(Game.Participant::getName).toList();
+    final var newGame = new Game(participantNames, scores);
 
     return gamesMap.replace(newGame.getId(), newGame);
   }
